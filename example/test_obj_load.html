@@ -1,0 +1,77 @@
+<html>
+    <head>
+        
+        <script src="../Babylon.js-master/dist/babylon.js"></script>
+        <script src="../Babylon.js-master/dist/loaders/babylonjs.loaders.min.js"></script>
+        <script src="../Babylon.js-master/dist/gui/babylon.gui.js"></script>
+        <script src="../Babylon.js-master/dist/loaders/babylon.objFileLoader.js"></script>
+        <script src="https://code.jquery.com/pep/0.4.3/pep.js"></script>
+        <script src="jquery-1.7.js"></script>
+        <script src="../main/test/main.js"></script>
+        <style>
+            body{
+                display: flex;
+                flex-direction: flex-star;
+                justify-content: center;
+                align-items: center;
+                margin: 0px;
+                padding: 0px;
+            }
+            #show1{
+                width: 100%;
+                height: 100%;
+            }
+        </style>
+    </head>
+    <body>
+        <canvas id="show1" touch-action="none"></canvas>
+        
+    </body>
+    <script>
+        var canvas = document.getElementById("show1"); // 创建画布 
+        var engine = new BABYLON.Engine(canvas, true); // 创建渲染引擎
+        var scene = new BABYLON.Scene(engine);
+        scene.clearColor = new BABYLON.Color3( .5, .5, .5);
+
+        // camera
+        var camera = new Universal_Camera(scene,canvas);
+        camera.create_camera();
+        camera.set_position(new BABYLON.Vector3(3,3,3));
+        camera.set_target(new BABYLON.Vector3(1,1,1));
+        // lights
+        var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 1, 0), scene);
+        light.intensity = 0.8;
+
+
+        //TEST
+        /**/
+        var wa=new World_Axis(scene,300);
+        wa.create_axis();
+
+        //TEST
+        var wg=new World_Ground(scene,300);
+        wg.create_ground();
+
+        var new_gameobj=create_obj1(scene);
+        setTimeout(function(){
+            new_gameobj.set_position_all(new BABYLON.Vector3(-3,0,0));
+        },3000);
+        
+
+        
+        //碰撞
+        scene.collisionsEnabled = true;
+        
+        engine.runRenderLoop(function(){
+            scene.render();  // 渲染场景
+        });
+        window.addEventListener("resize", function(){
+            engine.resize();
+        });
+
+
+
+        
+
+    </script>
+</html>

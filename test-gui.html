@@ -1,0 +1,488 @@
+<html>
+    <head>
+        
+        <script src="./Babylon.js-master/dist/babylon.js"></script>
+        <script src="./Babylon.js-master/dist/loaders/babylonjs.loaders.min.js"></script>
+        <script src="./Babylon.js-master/dist/gui/babylon.gui.js"></script>
+        <script src="./Babylon.js-master/dist/loaders/babylon.objFileLoader.js"></script>
+        <script src="https://code.jquery.com/pep/0.4.3/pep.js"></script>
+        <script src="jquery-1.7.js"></script>
+        <script src="./main/test/main.js"></script>
+        <style>
+            body{
+                display: flex;
+                flex-direction: flex-star;
+                justify-content: center;
+                align-items: center;
+                margin: 0px;
+                padding: 0px;
+            }
+            #show1{
+                width: 100%;
+                height: 100%;
+            }
+        </style>
+    </head>
+    <body>
+        <canvas id="show1" touch-action="none"></canvas>
+        
+    </body>
+    <script>
+        /*var canvas2 = document.getElementById("show2");
+        var engine2 = new BABYLON.Engine(canvas2, true); // 创建渲染引擎
+        var scene2 = new BABYLON.Scene(engine2);
+        scene2.clearColor = new BABYLON.Color3( .5, .5, .5);
+
+        // camera
+        var camera2 = new Universal_Camera(scene2,canvas2);
+        camera2.create_camera();
+        camera2.set_position(new BABYLON.Vector3(10,10,10));
+        camera2.set_target(new BABYLON.Vector3(1,1,1));
+
+        var wa2=new World_Axis(scene2,300);
+        wa2.create_axis();
+        //wa.hidden_axis();
+        //wa.show_axis();
+
+        //TEST
+        var wg2=new World_Ground(scene2,300);
+        wg2.create_ground();*/
+
+
+
+
+
+
+        var canvas = document.getElementById("show1"); // 创建画布 
+        var engine = new BABYLON.Engine(canvas, true); // 创建渲染引擎
+        var scene = new BABYLON.Scene(engine);
+        scene.clearColor = new BABYLON.Color3( .5, .5, .5);
+
+        // camera
+        var camera = new Universal_Camera(scene,canvas);
+        camera.create_camera();
+        camera.set_position(new BABYLON.Vector3(3,3,3));
+        camera.set_target(new BABYLON.Vector3(1,1,1));
+        // lights
+        var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 1, 0), scene);
+        light.intensity = 0.8;
+        //var spot_light = new BABYLON.SpotLight("spotLight", new BABYLON.Vector3(8, 8, 8), new BABYLON.Vector3(-1, -1, -1), Math.PI / 3, 2, scene);
+
+
+
+        //TEST
+        /**/
+        var wa=new World_Axis(scene,300);
+        wa.create_axis();
+        //wa.hidden_axis();
+        //wa.show_axis();
+
+        //TEST
+        var wg=new World_Ground(scene,300);
+        wg.create_ground();
+
+        var new_gameobj=create_obj1(scene);
+        setTimeout(function(){
+            new_gameobj.set_position_all(new BABYLON.Vector3(-3,0,0));
+        },3000);
+        
+
+        //TEST
+        /*var test_box = BABYLON.MeshBuilder.CreateBox("arm1", {height:0.75, width:0.3, depth:0.1875 }, scene);
+        var greyMat = new BABYLON.StandardMaterial("grey", scene);
+        greyMat.diffuseColor=new BABYLON.Color3(0.8,0.2,0.5);
+        test_box.material = greyMat;
+        test_box.position.x=5;
+        test_box.position.z=10;*/
+        /*var model_obj_name="AVP5_Standard.unity_1.obj";
+        var use_m=null;
+        BABYLON.SceneLoader.ImportMesh("", "./home/", model_obj_name, scene, function (newMeshes, particleSystems, skeletons) {
+            //newMeshes.scaling = new BABYLON.Vector3(0.2, 0.2, 0.2);
+            use_m=newMeshes[0];
+            use_m.position = new BABYLON.Vector3(0, 0, 0);
+            //use_m.material=ttt_h;
+
+            var gameobj=new MMYObject(scene);
+            gameobj.set_mesh(use_m);
+            gameobj.show_ground();
+            gameobj.show_axis();
+            gameobj.set_position_all(new BABYLON.Vector3(1,0,1));
+            gameobj.set_collision(true);*/
+
+            /*var material_test_h=new MMYMaterial_Change(scene);
+            //material_test.set_update_texture_qulity("tlow","product",5000,new_callback);
+            var ttt_h=material_test_h.create_material("./home","product",5000);
+            //material_test_h.set_reflectionTexture(hdrTexture);
+            material_test_h.set_main_texture("Gio_AlbedoTransparency.jpg");
+            material_test_h.set_metallic_texture("Gio_MetallicSmoothness.jpg");
+            material_test_h.set_bump("Gio_Normal.jpg");
+            material_test_h.set_occlusion("Gio_AO.jpg");
+            //material_test_h.set_main_color(new BABYLON.Color3(0.1,0.09,0.59));
+            material_test_h.set_metallic(0.1);
+
+            gameobj.set_low_material(material_test_h);
+            material_test_h.first_call_back(function(){
+                //alert("MMM1");
+                material_test_h.reload_texture();
+                material_test_h.second_call_back(function(){
+                    gameobj.set_high_material(material_test_h);
+                });
+            });*/
+            /*var material_test=new MMYMaterial(scene);
+            material_test.set_default_qulity("tlow");
+            //material_test.set_update_texture_qulity("tlow","product",5000,new_callback);
+            var ttt=material_test.create_material("./home");
+            //material_test.set_reflectionTexture(hdrTexture);
+            material_test.set_main_texture("Gio_AlbedoTransparency.jpg");
+            material_test.set_metallic_texture("Gio_MetallicSmoothness.jpg");
+            material_test.set_bump("Gio_Normal.jpg");
+            material_test.set_occlusion("Gio_AO.jpg");
+            //material_test.set_main_color(new BABYLON.Color3(0.1,0.09,0.59));
+            material_test.set_metallic(0.1);
+            //material_test.set_roughness(1);
+            gameobj.set_material(material_test);
+            
+            material_upgrade(material_test,"mid_l",10000,function(str){
+                //alert(str);
+            });
+        })*/
+
+        
+
+        
+        
+        //TTEST
+        //var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("ui1");
+        //var advancedTexture2 = BABYLON.GUI.AdvancedDynamicTexture.CreateForMesh(greyMat, 1024, 1024, false);
+        //advancedTexture.idealWidth = 100
+
+        //TEST
+        /*var test_box = BABYLON.MeshBuilder.CreateBox("arm1", {height:0.75, width:0.3, depth:0.1875 }, scene);
+        //var greyMat = new BABYLON.StandardMaterial("grey", scene);
+        //greyMat.diffuseColor=new BABYLON.Color3(0.8,0.2,0.5);
+        //test_box.material = greyMat;
+        test_box.position.x=5;
+        test_box.position.z=10;*/
+
+        /*var gameobj=new MMYObject(scene);
+        gameobj.set_mesh(test_box);
+        gameobj.show_ground();
+        gameobj.show_axis();
+        gameobj.set_position_all(new BABYLON.Vector3(1,0,1));
+        gameobj.set_collision(true);*/
+
+        
+        //var hdrTexture = BABYLON.CubeTexture.CreateFromPrefilteredData("./environment/env_street1.dds", scene);
+
+        //【Stander】
+        /*var smaterial=new BABYLON.StandardMaterial("ASDADS",this.scene);
+        smaterial.environmentIntensity = 1;
+        smaterial.specularIntensity = 0;*/
+
+
+        
+        /*var material_test=new MMYMaterial(scene);
+        material_test.set_default_qulity("tlow");
+        //material_test.set_update_texture_qulity("tlow","product",5000,new_callback);
+        var ttt=material_test.create_material("./home");
+        //material_test.set_reflectionTexture(hdrTexture);
+        material_test.set_main_texture("Gio_AlbedoTransparency.jpg");
+        material_test.set_metallic_texture("Gio_MetallicSmoothness.jpg");
+        material_test.set_bump("Gio_Normal.jpg");
+        material_test.set_occlusion("Gio_AO.jpg");
+        //material_test.set_main_color(new BABYLON.Color3(0.1,0.09,0.59));
+        material_test.set_metallic(0.1);
+        //material_test.set_roughness(1);
+        //gameobj.set_material(material_test);*/
+        
+        /*material_upgrade(material_test,"product",10000,function(str){
+            alert(str);
+        });*/
+
+        /*var material_test_h=new MMYMaterial_Change(scene,"product",5000);
+        //material_test.set_update_texture_qulity("tlow","product",5000,new_callback);
+        var ttt_h=material_test_h.create_material("./home");
+        //material_test_h.set_reflectionTexture(hdrTexture);
+        material_test_h.set_main_texture("Gio_AlbedoTransparency.jpg");
+        material_test_h.set_metallic_texture("Gio_MetallicSmoothness.jpg");
+        material_test_h.set_bump("Gio_Normal.jpg");
+        material_test_h.set_occlusion("Gio_AO.jpg");
+        //material_test_h.set_main_color(new BABYLON.Color3(0.1,0.09,0.59));
+        material_test_h.set_metallic(0.1);
+
+        gameobj.set_change_material(material_test_h);*/
+        
+        
+        
+        /*var callback_fun=function(){
+            //alert("READY0");
+            window.setTimeout(function(){
+                material_test.reload_texture("product");
+            },1000);
+            
+        }
+        material_test.set_texture_ready(callback_fun);*/
+        
+        
+
+        /*var material_test1=new MMYMaterial(scene);
+        var ttt1=material_test1.create_material("./home");
+        //material_test1.set_reflectionTexture(hdrTexture);
+        material_test1.set_main_texture("Gio_AlbedoTransparency.jpg");
+        material_test1.set_metallic_texture("Gio_MetallicSmoothness.jpg");
+        material_test1.set_bump("Gio_Normal.jpg");
+        material_test1.set_occlusion("Gio_AO.jpg");
+        //material_test1.set_main_color(new BABYLON.Color3(0.1,0.09,0.59));
+        material_test1.set_metallic(0.1);
+        //material_test1.set_roughness(1);
+        //gameobj.set_material(material_test1);
+        var callback_fun1=function(){
+            //alert("READY1");
+        }
+        material_test1.set_texture_ready(callback_fun1);*/
+
+
+
+
+        //【PBR】
+        /*Occlusion_name="Table_AO.jpg";
+        reflectivityTexture_name="Table_MetallicSmoothness.png";
+        roughness_glossinessTexture_name="Table_MetallicSmoothness.png";
+        bumpTexture_name="Table_Normal.jpg";
+        albedoTexture_name="Table_AlbedoTransparency.jpg";
+        metallicTexture_name="Table_MetallicSmoothness.png";
+        v_scale=1;
+        u_scale=1;
+
+        var hdrTexture = BABYLON.CubeTexture.CreateFromPrefilteredData("./environment/env_street1.dds", scene);
+        var wood = new BABYLON.PBRMaterial("wood", scene);
+        //wood.transparencyMode=0;
+        //设置环境反射
+        wood.reflectionTexture = hdrTexture;
+        wood.environmentIntensity = 1;
+        wood.specularIntensity = 0;
+        //wood.useSpecularOverAlpha=true;*/
+        //部分反射
+        //var reflectivityTexture=new BABYLON.Texture("./home/product/"+reflectivityTexture_name, scene);
+        //reflectivityTexture=v_scale;
+        //reflectivityTexture=u_scale;
+        //wood.reflectivityTexture = reflectivityTexture;
+        //wood.useMicroSurfaceFromReflectivityMapAlpha = true;/**/
+        //粗糙度/光泽度roughness/glossiness
+        /*var microSurfaceTexture=new BABYLON.Texture("./home/product/"+roughness_glossinessTexture_name, scene);
+        microSurfaceTexture=v_scale;
+        microSurfaceTexture=u_scale;
+        //wood.microSurfaceTexture=microSurfaceTexture;*/
+        //Occlusion
+        /*var Occlusion=new BABYLON.Texture("./home/product/"+Occlusion_name, scene);
+        Occlusion.uScale=v_scale;
+        Occlusion.vScale=u_scale;
+        wood.ambientTexture = Occlusion;
+        wood.ambientTextureStrength=0;
+        wood.ambientTextureImpactOnAnalyticalLights=0;*/
+        //bump凹凸贴图
+        /*var bumpTexture=new BABYLON.Texture("./home/product/"+bumpTexture_name, scene);
+        bumpTexture.uScale=v_scale;
+        bumpTexture.vScale=u_scale;
+        wood.bumpTexture = bumpTexture;
+        wood.useHorizonOcclusion=true;
+        wood.useParallaxOcclusion=true;
+        wood.useParallax=true;*/
+        //main 
+        /*var albedoTexture=new BABYLON.Texture("./home/product/"+albedoTexture_name, scene)
+        albedoTexture.uScale=v_scale;
+        albedoTexture.vScale=u_scale;
+        wood.albedoTexture = albedoTexture;
+        wood.albedoColor=new BABYLON.Color3(0,0.5,0.5);*/
+        //metallic
+        /*var metallicTexture=new BABYLON.Texture("./home/product/"+metallicTexture_name, scene);
+        metallicTexture.uScale=v_scale;
+        metallicTexture.vScale=u_scale;
+        wood.metallicTexture = metallicTexture;
+        wood.useAlphaFromAlbedoTexture=false;
+        wood.useRoughnessFromMetallicTextureAlpha=true;*/
+        //
+        //wood.transparencymode=3;
+        //wood.alpha=0.9
+        
+        //金属 摩擦/**/
+        //wood.roughness = 1;
+        //wood.metallic = 1;
+        //【PBR】
+
+        //model_obj_name="AVP5_Standard.unity_1.obj";
+        /*BABYLON.SceneLoader.ImportMesh("", "./home/", model_obj_name, scene, function (newMeshes, particleSystems, skeletons) {
+            //newMeshes.scaling = new BABYLON.Vector3(0.2, 0.2, 0.2);
+            for(var i=0;i<newMeshes.length;i++){
+                newMeshes[i].position = new BABYLON.Vector3(0, 0, 0);
+                //newMeshes[i].scaling = new BABYLON.Vector3(0.5, 0.5, 0.5);
+                newMeshes[i].material=ttt1;
+                //newMeshes[i].rotation.y=-Math.PI/4
+                //newMeshes[i].rotation.y=70;
+            }
+
+        })*/
+
+        /*var use_m=null;
+        BABYLON.SceneLoader.ImportMesh("", "./home/", model_obj_name, scene, function (newMeshes, particleSystems, skeletons) {
+            //newMeshes.scaling = new BABYLON.Vector3(0.2, 0.2, 0.2);
+            use_m=newMeshes[0];
+            use_m.position = new BABYLON.Vector3(3, 0, 0);
+            use_m.material=ttt_h;
+            
+        })*/
+        
+        
+
+        //材质
+        /*var material_test=new MMYMaterial(scene);
+        material_test.create_material();
+        material_test.set_reflectionTexture(hdrTexture);
+        material_test.set_main_texture("./wood.jpg");
+        material_test.set_main_color(new BABYLON.Color3(0.5,0.5,0.1));
+        gameobj.set_material(material_test);*/
+
+        
+
+        /*var label = new MMYLabel(advancedTexture);
+        //label.create_label_st1("This line spacing is set",70,60,"#8B0000",12);
+        label.create_label_st2("This line spacing is set",70,70,"#F5F5F5",12);
+        label.link_obj(gameobj);*/
+
+
+        /*var radio=new MMYRadio(advancedTexture);
+        radio.create_radio_group();
+        radio.create_radio(10,"Test",30,20,10);
+        radio.create_radio(10,"Test",30,20,10);*/
+
+        /*var check=new MMYChecked(advancedTexture);
+        check.create_check(10,"Test",25,20,true,10);*/
+        
+        /*var slider=new MMYSlider(advancedTexture);
+        slider.create_slider_st2(200,20,0,100,50);
+        slider.set_alpha(0.4);*/
+
+        //var pointer=new MMYText_Pointer(advancedTexture);
+        //pointer.create_text_pointer(gameobj,"Test",30,100,150);
+        //pointer.create_text_pointer_ori(gameobj,"Test",30,100,150);
+        //pointer.hidden_pointer();
+        //pointer.show_pointer();
+
+        //var pointer=new MMYImage_Pointer(advancedTexture);
+        //pointer.create_image_pointer(gameobj,"./grass.png",30,100,150);
+        //pointer.create_image_pointer_ori(gameobj,"./grass.png",30,100,150);
+
+
+
+        //var pointer=new MMYButton_Pointer(advancedTexture);
+        //pointer.create_button_pointer(gameobj,"Test",30,100,150)
+        //pointer.create_image_button_pointer(gameobj,"./grass.png",30,100,150)
+
+
+        //var button=new MMYButton(advancedTexture);
+        //单位px
+        //button.create_button_st1("Test",70,30,"error",12,5,1,"./grass.png");
+        //button.create_button_st1("Test",70,30,"error",12,5);
+        /*button.create_button_image("./grass.png",70,30,5,"error",0);
+        //button.set_position(20,20);
+        button.link_obj(gameobj);
+        //button.set_link_offset(10,0);
+        //button.create_button_image("./grass.png",70,30,5,"error",0);*/
+        
+        
+
+        /*var button1 = BABYLON.GUI.Button.CreateSimpleButton("but", "Click me");
+        button1.width = 0.2;
+        button1.height = "40px";
+        button1.cornerRadius = 20;
+        button1.color = "Orange";
+        button1.thickness = 4;
+        button1.rotation = 0.2;
+        button1.scaleY = 1.5;
+        button1.background = "green";
+        button1.onPointerUpObservable.add(function() {
+            alert("yeah!");
+        });
+        advancedTexture.addControl(button1);*/
+
+        /*var text1 = new BABYLON.GUI.TextBlock();
+        text1.text = "Hello world";
+        text1.color = "white";
+        text1.fontSize = 24;
+        advancedTexture.addControl(text1);*/
+        
+        /*var rect1 = new BABYLON.GUI.Rectangle();
+        rect1.width = 0.2;
+        rect1.height = "40px";
+        rect1.cornerRadius = 20;
+        rect1.color = "Orange";
+        rect1.thickness = 4;
+        rect1.background = "green";
+        rect1.linkOffsetY = -150;
+        advancedTexture.addControl(rect1);
+        rect1.linkWithMesh(test_box);
+
+        var label = new BABYLON.GUI.TextBlock();
+        label.text = "Sphere";
+        rect1.addControl(label);
+
+        var target = new BABYLON.GUI.Ellipse();
+        target.width = "40px";
+        target.height = "40px";
+        target.color = "Orange";
+        target.thickness = 4;
+        target.background = "green";
+        advancedTexture.addControl(target);
+        target.linkWithMesh(test_box);   
+        
+        var line = new BABYLON.GUI.Line();
+        line.lineWidth = 4;
+        line.color = "Orange";
+        line.y2 = 20;
+        line.linkOffsetY = -20;
+        advancedTexture.addControl(line);
+        line.linkWithMesh(test_box); 
+        line.connectedControl = rect1;*/
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+        //碰撞
+        scene.collisionsEnabled = true;
+        
+        engine.runRenderLoop(function(){
+            scene.render();  // 渲染场景
+        });
+        window.addEventListener("resize", function(){
+            engine.resize();
+        });
+
+
+
+        
+
+    </script>
+</html>

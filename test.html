@@ -1,0 +1,255 @@
+<html>
+    <head>
+        
+        <script src="./Babylon.js-master/dist/babylon.js"></script>
+        <script src="./Babylon.js-master/dist/loaders/babylonjs.loaders.min.js"></script>
+        <script src="./Babylon.js-master/dist/loaders/babylon.objFileLoader.js"></script>
+        <script src="https://code.jquery.com/pep/0.4.3/pep.js"></script>
+        <script src="jquery-1.7.js"></script>
+        <script src="./main/test/main.js"></script>
+        <style>
+            body{
+                display: flex;
+                flex-direction: flex-star;
+                justify-content: center;
+                align-items: center;
+                margin: 0px;
+                padding: 0px;
+            }
+            #show1{
+                width: 100%;
+                height: 100%;
+            }
+        </style>
+    </head>
+    <body>
+        <canvas id="show1" touch-action="none"></canvas>
+        
+    </body>
+    <script>
+        $(document).ready(function(){
+            //test();
+        })
+        
+        var canvas = document.getElementById("show1"); // 创建画布 
+        var engine = new BABYLON.Engine(canvas, true); // 创建渲染引擎
+        var scene = new BABYLON.Scene(engine);
+        scene.clearColor = new BABYLON.Color3( .5, .5, .5);
+
+        // camera
+        /*var camera = new Universal_Camera(scene,canvas);
+        camera.create_camera();
+        camera.set_position(new BABYLON.Vector3(10,0,10));
+        camera.set_target(new BABYLON.Vector3(1,0,1));*/
+
+        /*var camera = new Universal_Camera(scene,canvas);
+        camera.create_camera_target(new BABYLON.Vector3(1,0,1));
+        camera.set_position(new BABYLON.Vector3(10,10,10));*/
+
+        var camera=new Arc_Rotate_Camera(scene,canvas);
+        camera.create_camera();
+        //camera.set_target(new BABYLON.Vector3(5,0,5));
+        camera.set_position(new BABYLON.Vector3(Math.PI/4,Math.PI/4,5));
+        //camera.set_radius(100);
+
+
+        //【UniversalCamera】
+        /*var camera = new BABYLON.UniversalCamera("UniversalCamera", new BABYLON.Vector3(10, 10, 10), scene);
+        //给相机的目标设置特定的位置（相机总是朝向它的目标），在这个例子中设置为场景的原点
+        camera.setTarget(new BABYLON.Vector3(1,0,1));
+        camera.minZ=0.001;
+        //将相机和画布关联
+        camera.attachControl(canvas, true);*/
+        //cameraDirection
+        //camera.cameraDirection=new BABYLON.Vector3(0,100,0);
+        //speed
+        //camera.speed=10;
+        //cameraRotation
+        //camera.cameraRotation=new BABYLON.Vector3(Math.PI/4,0,0);
+        //lockedTarget
+
+        //noRotationConstraint
+        //camera.noRotationConstraint=false;
+
+        //rotation
+        //camera.rotation=new BABYLON.Vector3(Math.PI/4,0,0);
+        
+
+        //ArcRotateCamera
+        /*var camera = new BABYLON.ArcRotateCamera("ArcRotateCamera", 0, 0, 10, new BABYLON.Vector3(0, 0, 0), scene);
+        // 这是相机的位置，覆盖相机的alpha、beta、半径值
+        camera.setPosition(new BABYLON.Vector3(0, 0, 20));
+        // 将相机和画布关联
+        camera.attachControl(canvas, true);*/
+
+
+
+
+        // lights
+        var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(1, 0.5, 0), scene);
+        light.intensity = 0.8;
+
+
+
+        //TEST
+        /**/
+        var wa=new World_Axis(scene,300);
+        wa.create_axis();
+        //wa.hidden_axis();
+        //wa.show_axis();
+
+        //TEST
+        var wg=new World_Ground(scene,300);
+        wg.create_ground();
+
+        //TEST
+        var test_box = BABYLON.MeshBuilder.CreateBox("arm1", {height:0.75, width:0.3, depth:0.1875 }, scene);
+        var greyMat = new BABYLON.StandardMaterial("grey", scene);
+        greyMat.diffuseColor=new BABYLON.Color3(0.8,0.2,0.5);
+        test_box.material = greyMat;
+        test_box.position.x=5;
+        test_box.position.z=10;
+
+        var gameobj=new MMYObject(scene);
+        gameobj.set_mesh(test_box);
+        gameobj.show_ground();
+        gameobj.show_axis();
+        gameobj.set_position_all(new BABYLON.Vector3(1,0,1));
+        gameobj.set_collision(true);
+        //gameobj.set_rotation_all(new BABYLON.Vector3(Math.PI/4,0,0));
+
+        
+        //碰撞
+        scene.collisionsEnabled = true;
+        //camera.collisionMask=[test_box];
+        /*
+        camera.checkCollisions = true;
+        //camera.applyGravity = true;
+        camera.ellipsoid = new BABYLON.Vector3(1, 1, 1);
+        camera.onCollide=function(mesh){
+            console.log("A");
+        };*/
+
+
+
+        //camera.lockedTarget=test_box;
+
+        /*var sphere = BABYLON.MeshBuilder.CreateBox("arm2", {height:0.75, width:0.3, depth:0.1875 }, scene);
+        sphere.position=BABYLON.Vector3.Zero();
+        var gameobj2=new MMYObject(scene);
+        gameobj2.set_mesh(sphere);
+        gameobj2.show_ground();
+        gameobj2.show_axis();
+        gameobj2.set_position_all(new BABYLON.Vector3(5,0,0));*/
+
+        /*var obj_group=new MMYObject_Group(scene);
+        obj_group.set_obj(gameobj);
+        obj_group.set_obj(gameobj2);
+        //obj_group.hidden_group();
+
+        //obj_group.remove_obj(gameobj2);
+        obj_group.hidden_group();
+        obj_group.show_group();
+        
+        //obj_group.set_rotation_all(new BABYLON.Vector3(Math.PI/4,0,0));
+        //obj_group.set_position_all(new BABYLON.Vector3(1,0,0));
+        obj_group.set_scale_all(new BABYLON.Vector3(1,2,1));*/
+
+
+        //obj_group.show_group();
+        //gameobj.set_position("x",25);
+        //gameobj.set_position_all(new BABYLON.Vector3(5,7,5));
+        //var p_x=gameobj.get_position("x");
+        //alert(p_x);
+        //gameobj.set_scale_all(new BABYLON.Vector3(2,1,1));
+        //gameobj.set_rotation_all(new BABYLON.Vector3(Math.PI/4,0,0));
+        //alert(gameobj.get_rotation("x"));
+        /*var ma=new Mesh_Axis(scene,5);
+        ma.create_axis(test_box);
+        //ma.hidden_axis();
+
+        var mg=new Mesh_Ground(scene,5);
+        mg.create_ground(test_box);
+        //mg.hidden_ground();
+
+        
+
+
+
+
+        //TEST
+        var ma1=new Mesh_Axis(scene,5);
+        ma1.create_axis(sphere);
+        sphere.position.x=-10;
+        sphere.position.y=10;*/
+
+        
+        //TEST-LIGHT
+        //var point_light = new BABYLON.PointLight("pointLight", new BABYLON.Vector3(1, 1, 1), scene);
+        //point_light.intensity=3;
+        //point_light.setEnabled(false);
+        //var dir_light = new BABYLON.DirectionalLight("DirectionalLight", new BABYLON.Vector3(0, 1, 0), scene);
+        //var spot_light = new BABYLON.SpotLight("spotLight", new BABYLON.Vector3(1, 1, 1), new BABYLON.Vector3(0, -1, 0.3), Math.PI / 3, 2, scene);
+        //var hemi_light = new BABYLON.HemisphericLight("HemiLight", new BABYLON.Vector3(0, 1, 0), scene);
+
+        //照明半径（spot，point）
+        //spot_light.range = 5;
+        //point_light.range = 3;
+        //point_light.excludedMeshes=[sphere];
+
+        //diffuse(漫反射)
+        //specular(镜面反射)
+        //spot_light.diffuse = new BABYLON.Color3(1, 0, 0);
+        //spot_light.specular = new BABYLON.Color3(0, 1, 0);
+
+        //hemi_light.diffuse = new BABYLON.Color3(1, 0, 0);
+        //hemi_light.specular = new BABYLON.Color3(0, 1, 0);
+        //hemi_light.diffuse = new BABYLON.Color3(1, 0, 0);
+
+        //groundColor(地面反射)
+        //hemi_light.groundColor = new BABYLON.Color3(0, 0, 0);
+
+        //var material = new BABYLON.StandardMaterial("mat", scene);
+        //material.maxSimultaneousLights = 6;
+
+        //scene.receiveShadows = true;
+        //光照贴图
+        /*var lightmap = new BABYLON.Texture("lightmap.png", scene);
+        var material = new BABYLON.StandardMaterial("material", scene);
+        material.lightmapTexture = lightmap;*/
+        
+        
+        //阴影
+        /*var ground01 = BABYLON.Mesh.CreateGround("Spotlight Hard Shadows", 24, 60, 1, scene, false);
+        var groundMaterial = new BABYLON.StandardMaterial("ground", scene);
+        groundMaterial.diffuseColor = new BABYLON.Color3(0.5,0.5,0.5);
+        groundMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
+        //groundMaterial.emissiveColor = new BABYLON.Color3(0.2, 0.2, 0.2);
+        ground01.material = groundMaterial;
+        ground01.receiveShadows = true;
+        ground01.position.x = -30;
+
+        var box00 = BABYLON.Mesh.CreateBox("*box00", 5, scene, false);
+        box00.position = new BABYLON.Vector3(-30, 5, 0);
+        var boxMaterial = new BABYLON.StandardMaterial("mat", scene);
+        boxMaterial.diffuseColor = new BABYLON.Color3(1.0, 0, 0);
+        boxMaterial.specularColor = new BABYLON.Color3(0.5, 0, 0);
+        box00.material = boxMaterial;
+        var light00 = new BABYLON.SpotLight("*spot00", new BABYLON.Vector3(-30, 20, -10), new BABYLON.Vector3(0, -1, 0.3), 1.2, 24, scene);
+        //var shadowGenerator00 = new BABYLON.ShadowGenerator(512, light00);
+        //shadowGenerator00.getShadowMap().renderList.push(box00);
+        //light00.includedOnlyMeshes.push(box00);*/
+
+        engine.runRenderLoop(function(){
+            scene.render();  // 渲染场景
+        });
+        window.addEventListener("resize", function(){
+            engine.resize();
+        });
+
+
+
+        
+
+    </script>
+</html>
